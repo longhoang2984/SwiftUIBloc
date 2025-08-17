@@ -1,6 +1,6 @@
 //
-//  SwiftUIBlocDemoApp.swift
-//  SwiftUIBlocDemo
+//  SwiftUIBlocExampleApp.swift
+//  SwiftUIBlocExample
 //
 //  Created by Cửu Long Hoàng on 17/8/25.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct SwiftUIBlocDemoApp: App {
+struct SwiftUIBlocExampleApp: App {
     var body: some Scene {
         WindowGroup {
             SwiftUIBlocExamples()

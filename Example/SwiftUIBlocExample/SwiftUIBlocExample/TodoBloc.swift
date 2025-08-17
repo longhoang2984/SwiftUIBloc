@@ -199,7 +199,7 @@ final class TodoBloc: Bloc<TodoEvent, TodoState> {
     }
     
     // MARK: - Bloc Overrides
-    override func onTransition(_ transition: Transition<TodoEvent, TodoState>) {
+    override func onTransition(_ transition: SwiftUIBloc.Transition<TodoEvent, TodoState>) {
         print("Todo Transition: \(transition.event) -> \(transition.nextState.todos.count) todos")
     }
     
@@ -228,98 +228,100 @@ private struct TodoContent: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                BlocBuilder<TodoBloc, TodoState> { state in
-                    VStack(spacing: 16) {
-                        // Header Stats
-                        VStack(spacing: 8) {
-                            Text("Bloc Todo Example")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                            
-                            HStack(spacing: 16) {
-                                Label("\(state.activeCount)", systemImage: "circle")
-                                    .foregroundColor(.blue)
+                BlocBuilder<TodoBloc, TodoState, AnyView> { state in
+                    AnyView(
+                        VStack(spacing: 16) {
+                            // Header Stats
+                            VStack(spacing: 8) {
+                                Text("Bloc Todo Example")
+                                    .font(.title2)
+                                    .fontWeight(.bold)
                                 
-                                Label("\(state.completedCount)", systemImage: "checkmark.circle.fill")
-                                    .foregroundColor(.green)
-                            }
-                            .font(.caption)
-                        }
-                        .padding()
-                        
-                        // Add Todo Input
-                        HStack {
-                            TextField("Add a new todo...", text: $newTodoText)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .onSubmit {
-                                    addTodo()
+                                HStack(spacing: 16) {
+                                    Label("\(state.activeCount)", systemImage: "circle")
+                                        .foregroundColor(.blue)
+                                    
+                                    Label("\(state.completedCount)", systemImage: "checkmark.circle.fill")
+                                        .foregroundColor(.green)
                                 }
-                            
-                            Button("Add") {
-                                addTodo()
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .disabled(newTodoText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                        }
-                        .padding(.horizontal)
-                        
-                        // Filter Tabs
-                        Picker("Filter", selection: Binding(
-                            get: { state.filter },
-                            set: { bloc.add(event: .setFilter($0)) }
-                        )) {
-                            ForEach(TodoFilter.allCases, id: \.self) { filter in
-                                Text(filter.title).tag(filter)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .padding(.horizontal)
-                        
-                        // Error Display
-                        if let error = state.error {
-                            Text(error)
-                                .foregroundColor(.red)
                                 .font(.caption)
-                                .padding(.horizontal)
-                        }
-                        
-                        // Todo List
-                        List {
-                            ForEach(state.filteredTodos) { todo in
-                                TodoRow(
-                                    todo: todo,
-                                    isEditing: editingTodo?.id == todo.id,
-                                    editText: $editText,
-                                    onToggle: { bloc.add(event: .toggleTodo(id: todo.id)) },
-                                    onDelete: { bloc.add(event: .deleteTodo(id: todo.id)) },
-                                    onEdit: { startEditing(todo: todo) },
-                                    onSaveEdit: { saveEdit(todo: todo) },
-                                    onCancelEdit: { cancelEdit() }
-                                )
-                            }
-                        }
-                        .listStyle(PlainListStyle())
-                        
-                        // Bulk Actions
-                        if !state.todos.isEmpty {
-                            HStack {
-                                Button("Toggle All") {
-                                    bloc.add(event: .toggleAll)
-                                }
-                                .buttonStyle(.bordered)
-                                
-                                Spacer()
-                                
-                                if state.completedCount > 0 {
-                                    Button("Clear Completed") {
-                                        bloc.add(event: .clearCompleted)
-                                    }
-                                    .buttonStyle(.bordered)
-                                }
                             }
                             .padding()
+                            
+                            // Add Todo Input
+                            HStack {
+                                TextField("Add a new todo...", text: $newTodoText)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .onSubmit {
+                                        addTodo()
+                                    }
+                                
+                                Button("Add") {
+                                    addTodo()
+                                }
+                                .buttonStyle(.borderedProminent)
+                                .disabled(newTodoText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                            }
+                            .padding(.horizontal)
+                            
+                            // Filter Tabs
+                            Picker("Filter", selection: Binding(
+                                get: { state.filter },
+                                set: { bloc.add(event: .setFilter($0)) }
+                            )) {
+                                ForEach(TodoFilter.allCases, id: \.self) { filter in
+                                    Text(filter.title).tag(filter)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                            .padding(.horizontal)
+                            
+                            // Error Display
+                            if let error = state.error {
+                                Text(error)
+                                    .foregroundColor(.red)
+                                    .font(.caption)
+                                    .padding(.horizontal)
+                            }
+                            
+                            // Todo List
+                            List {
+                                ForEach(state.filteredTodos) { todo in
+                                    TodoRow(
+                                        todo: todo,
+                                        isEditing: editingTodo?.id == todo.id,
+                                        editText: $editText,
+                                        onToggle: { bloc.add(event: .toggleTodo(id: todo.id)) },
+                                        onDelete: { bloc.add(event: .deleteTodo(id: todo.id)) },
+                                        onEdit: { startEditing(todo: todo) },
+                                        onSaveEdit: { saveEdit(todo: todo) },
+                                        onCancelEdit: { cancelEdit() }
+                                    )
+                                }
+                            }
+                            .listStyle(PlainListStyle())
+                            
+                            // Bulk Actions
+                            if !state.todos.isEmpty {
+                                HStack {
+                                    Button("Toggle All") {
+                                        bloc.add(event: .toggleAll)
+                                    }
+                                    .buttonStyle(.bordered)
+                                    
+                                    Spacer()
+                                    
+                                    if state.completedCount > 0 {
+                                        Button("Clear Completed") {
+                                            bloc.add(event: .clearCompleted)
+                                        }
+                                        .buttonStyle(.bordered)
+                                    }
+                                }
+                                .padding()
+                            }
                         }
-                    }
+                    )
                 }
             }
             .navigationBarHidden(true)

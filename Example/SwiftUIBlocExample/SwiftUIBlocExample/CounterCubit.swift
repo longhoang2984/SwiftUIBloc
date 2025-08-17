@@ -75,13 +75,13 @@ private struct CounterContent: View {
     @EnvironmentObject private var cubit: CounterCubit
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 40) {
             Text("Cubit Counter Example")
                 .font(.title)
                 .fontWeight(.bold)
             
-            BlocBuilder<CounterCubit, CounterState> { state in
-                VStack(spacing: 16) {
+            BlocBuilder<CounterCubit, CounterState, AnyView> { (state: CounterState) in
+                AnyView(VStack(spacing: 36) {
                     // Counter Display
                     Text("\(state.count)")
                         .font(.largeTitle)
@@ -101,7 +101,7 @@ private struct CounterContent: View {
                     }
                     
                     // Button Controls
-                    VStack(spacing: 12) {
+                    VStack(spacing: 30) {
                         HStack(spacing: 16) {
                             Button(action: { cubit.decrement() }) {
                                 Image(systemName: "minus.circle.fill")
@@ -134,7 +134,7 @@ private struct CounterContent: View {
                             .disabled(state.isLoading)
                         }
                     }
-                }
+                })
             }
             
             Spacer()

@@ -1,0 +1,15 @@
+{
+  "originHash" : "97463fce3d2484d8759bfee40a10dff7a83d6341146b8a111256bd04647e09b0",
+  "pins" : [
+    {
+      "identity" : "swiftuibloc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/longhoang2984/SwiftUIBloc",
+      "state" : {
+        "branch" : "main",
+        "revision" : "af7ba87fa555761dc5d9ca6896b35934b336f8d9"
+      }
+    }
+  ],
+  "version" : 3
+}

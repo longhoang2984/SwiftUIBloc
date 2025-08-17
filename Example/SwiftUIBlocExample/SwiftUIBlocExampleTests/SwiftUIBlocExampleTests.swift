@@ -1,14 +1,14 @@
 //
-//  SwiftUIBlocDemoTests.swift
-//  SwiftUIBlocDemoTests
+//  SwiftUIBlocExampleTests.swift
+//  SwiftUIBlocExampleTests
 //
 //  Created by Cửu Long Hoàng on 17/8/25.
 //
 
 import Testing
-@testable import SwiftUIBlocDemo
+@testable import SwiftUIBlocExample
 
-struct SwiftUIBlocDemoTests {
+struct SwiftUIBlocExampleTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.

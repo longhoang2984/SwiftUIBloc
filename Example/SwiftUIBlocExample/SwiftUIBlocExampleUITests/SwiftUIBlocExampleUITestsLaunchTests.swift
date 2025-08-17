@@ -1,13 +1,13 @@
 //
-//  SwiftUIBlocDemoUITestsLaunchTests.swift
-//  SwiftUIBlocDemoUITests
+//  SwiftUIBlocExampleUITestsLaunchTests.swift
+//  SwiftUIBlocExampleUITests
 //
 //  Created by Cửu Long Hoàng on 17/8/25.
 //
 
 import XCTest
 
-final class SwiftUIBlocDemoUITestsLaunchTests: XCTestCase {
+final class SwiftUIBlocExampleUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
