@@ -73,7 +73,7 @@ private struct ExamplesList: View {
             }
             
             Section {
-                Link("SwiftUIBloc Documentation", destination: URL(string: "https://github.com/your-repo/SwiftUIBloc")!)
+                Link("SwiftUIBloc Documentation", destination: URL(string: "https://github.com/longhoang2984/SwiftUIBloc")!)
                     .foregroundColor(.blue)
                 
                 Link("Flutter BLoC Pattern", destination: URL(string: "https://bloclibrary.dev/")!)
